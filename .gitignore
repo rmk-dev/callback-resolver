@@ -1,0 +1,6 @@
+vendor/
+.idea/
+data/
+!data/.gitkeep
+.DS_Store
+
