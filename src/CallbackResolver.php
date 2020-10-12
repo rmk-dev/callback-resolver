@@ -16,7 +16,7 @@ use Psr\Container\ContainerInterface as PsrContainer;
 /**
  * Class CallbackResolver
  *
- * @package Rmk\Lib\Resolver
+ * @package Terry\Lib\Resolver
  */
 class CallbackResolver
 {

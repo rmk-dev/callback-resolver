@@ -3,7 +3,7 @@
 * ResolverException class
 *
 * @category ResolverException
-* @package  Rmk\Lib\Resolver
+* @package  Terry\Lib\Resolver
 * @author   Kiril Savchev <k.savchev@gmail.com>
 * @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
 * @link     http://www.rakiika.com/
