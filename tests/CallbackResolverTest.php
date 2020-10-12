@@ -75,6 +75,11 @@ class CallbackResolverTest extends TestCase
         $this->assertIsCallable($test4);
         $this->assertEquals(1, $test4());
 
+        $test5 = $this->resolver->resolve(TestClass::class);
+        $this->assertIsObject($test5);
+        $this->assertInstanceOf(TestClass::class, $test5);
+        $this->assertIsCallable($test5);
+        $this->assertEquals(1, $test5());
     }
 
     public function testInvalidArgumentException()

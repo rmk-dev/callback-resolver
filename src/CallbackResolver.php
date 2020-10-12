@@ -58,6 +58,9 @@ class CallbackResolver
      */
     public function resolve($potentialCallback): callable
     {
+        if (is_string($potentialCallback) && !is_callable($potentialCallback)) {
+            $potentialCallback = [$potentialCallback];
+        }
 
         if (is_array($potentialCallback) && count($potentialCallback) >= 1) {
             $first = array_shift($potentialCallback);
