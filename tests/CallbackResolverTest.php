@@ -1,11 +1,11 @@
 <?php
 
-namespace Terry\CallbackResolverTests;
+namespace Rmk\CallbackResolverTests;
 
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
-use Terry\CallbackResolver\CallbackResolver;
-use Terry\CallbackResolver\ResolverException;
+use Rmk\CallbackResolver\CallbackResolver;
+use Rmk\CallbackResolver\ResolverException;
 
 class TestClass {
     public function process(): int

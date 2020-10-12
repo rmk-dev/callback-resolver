@@ -1,10 +1,10 @@
 <?php
 
-namespace Terry\CallbackResolverTests;
+namespace Rmk\CallbackResolverTests;
 
 use PHPUnit\Framework\TestCase;
-use Terry\CallbackResolver\CallbackResolver;
-use Terry\CallbackResolver\CallbackResolverAwareTrait;
+use Rmk\CallbackResolver\CallbackResolver;
+use Rmk\CallbackResolver\CallbackResolverAwareTrait;
 
 class CallbackResolverAwareTraitTest extends TestCase
 {

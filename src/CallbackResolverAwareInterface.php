@@ -3,18 +3,18 @@
  * CallbackResolverAwareInterface class
  *
  * @category CallbackResolverAwareInterface
- * @package  Terry\Lib\Resolver
+ * @package  Rmk\Lib\Resolver
  * @author   Kiril Savchev <k.savchev@gmail.com>
  * @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
  * @link     http://www.rakiika.com/
  *
  */
-namespace Terry\CallbackResolver;
+namespace Rmk\CallbackResolver;
 
 /**
  * Interface CallbackResolverAwareInterface
  *
- * @package Terry\Lib\Resolver
+ * @package Rmk\Lib\Resolver
  */
 interface CallbackResolverAwareInterface
 {

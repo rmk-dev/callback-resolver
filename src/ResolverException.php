@@ -3,13 +3,13 @@
 * ResolverException class
 *
 * @category ResolverException
-* @package  Terry\Lib\Resolver
+* @package  Rmk\Lib\Resolver
 * @author   Kiril Savchev <k.savchev@gmail.com>
 * @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
 * @link     http://www.rakiika.com/
 *
 */
-namespace Terry\CallbackResolver;
+namespace Rmk\CallbackResolver;
 
 use InvalidArgumentException;
 use Throwable;
@@ -17,7 +17,7 @@ use Throwable;
 /**
  * Class ResolverException
  *
- * @package Terry\CallbackResolver
+ * @package Rmk\CallbackResolver
  */
 class ResolverException extends InvalidArgumentException
 {

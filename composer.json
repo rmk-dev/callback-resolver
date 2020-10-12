@@ -2,6 +2,7 @@
     "name": "terry/callback-resolver",
     "description": "Callback container and resolver service",
     "require": {
+        "php": "^7.4",
         "psr/container": "^1.0"
     },
     "require-dev": {
@@ -15,12 +16,12 @@
     ],
     "autoload": {
         "psr-4": {
-            "Terry\\CallbackResolver\\": "./src/"
+            "Rmk\\CallbackResolver\\": "./src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Terry\\CallbackResolverTests\\": "./tests/"
+            "Rmk\\CallbackResolverTests\\": "./tests/"
         }
     }
 }

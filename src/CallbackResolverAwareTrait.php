@@ -3,18 +3,18 @@
  * CallbackResolverAwareTrait class
  *
  * @category CallbackResolverAwareTrait
- * @package  Terry\Lib\Resolver
+ * @package  Rmk\Lib\Resolver
  * @author   Kiril Savchev <k.savchev@gmail.com>
  * @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
  * @link     http://www.rakiika.com/
  *
  */
-namespace Terry\CallbackResolver;
+namespace Rmk\CallbackResolver;
 
 /**
  * Trait CallbackResolverAwareTrait
  *
- * @package Terry\Lib\Resolver
+ * @package Rmk\Lib\Resolver
  */
 trait CallbackResolverAwareTrait
 {
