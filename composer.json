@@ -1,5 +1,5 @@
 {
-    "name": "terry/callback-resolver",
+    "name": "rmk/callback-resolver",
     "description": "Callback container and resolver service",
     "require": {
         "php": "^7.4",

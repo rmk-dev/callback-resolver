@@ -1,4 +1,4 @@
-# terry/callback-resolver
+# rmk/callback-resolver
 
 Simple callback resolver from any callback form (array, string, etc.). It supports also extracting a service from service container.
 
