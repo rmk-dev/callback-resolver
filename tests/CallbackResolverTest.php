@@ -16,6 +16,10 @@ class TestClass {
     {
         return $this->process();
     }
+    public static function staticMethod(): int
+    {
+        return 123;
+    }
 }
 
 class CallbackResolverTest extends TestCase
@@ -47,39 +51,92 @@ class CallbackResolverTest extends TestCase
         $this->assertSame($this->container, $this->resolver->getContainer());
     }
 
-    public function testResolveCallback()
+    public function testResolveArrayWithString()
     {
         $test = $this->resolver->resolve(['test', 'process']);
         $this->assertIsArray($test);
         $this->assertIsCallable($test);
         $this->assertEquals(1, $test());
+    }
 
-        $test2 = $this->resolver->resolve([TestClass::class, 'process']);
-        $this->assertIsArray($test2);
-        $this->assertIsCallable($test2);
-        $this->assertEquals(1, $test2());
+    public function testResolveArrayWithClassname()
+    {
+        $test = $this->resolver->resolve([TestClass::class, 'process']);
+        $this->assertIsArray($test);
+        $this->assertIsCallable($test);
+        $this->assertEquals(1, $test());
+    }
 
-        $testCallable = $this->resolver->resolve(static function() { return 2; });
+    public function testResolveStaticFunction()
+    {
+        $testCallable = $this->resolver->resolve(static function () {
+            return 2;
+        });
         $this->assertIsCallable($testCallable);
         $this->assertEquals(2, $testCallable());
+    }
 
-        $test3 = $this->resolver->resolve([new TestClass()]);
-        $this->assertIsObject($test3);
-        $this->assertInstanceOf(TestClass::class, $test3);
-        $this->assertIsCallable($test3);
-        $this->assertEquals(1, $test3());
+    public function testResolveArrayWithObject()
+    {
+        $test = $this->resolver->resolve([new TestClass()]);
+        $this->assertIsObject($test);
+        $this->assertInstanceOf(TestClass::class, $test);
+        $this->assertIsCallable($test);
+        $this->assertEquals(1, $test());
+    }
 
-        $test4 = $this->resolver->resolve(new TestClass());
-        $this->assertIsObject($test4);
-        $this->assertInstanceOf(TestClass::class, $test3);
-        $this->assertIsCallable($test4);
-        $this->assertEquals(1, $test4());
+    public function testResolveCallbaleObject()
+    {
+        $test = $this->resolver->resolve(new TestClass());
+        $this->assertIsObject($test);
+        $this->assertInstanceOf(TestClass::class, $test);
+        $this->assertIsCallable($test);
+        $this->assertEquals(1, $test());
+    }
 
-        $test5 = $this->resolver->resolve(TestClass::class);
-        $this->assertIsObject($test5);
-        $this->assertInstanceOf(TestClass::class, $test5);
-        $this->assertIsCallable($test5);
-        $this->assertEquals(1, $test5());
+    public function testResolveStringWithClassname()
+    {
+        $test = $this->resolver->resolve(TestClass::class);
+        $this->assertIsObject($test);
+        $this->assertInstanceOf(TestClass::class, $test);
+        $this->assertIsCallable($test);
+        $this->assertEquals(1, $test());
+    }
+
+    public function testResolveStringWithScopeOperator()
+    {
+        $test = $this->resolver->resolve(TestClass::class . '::staticMethod');
+        $this->assertIsCallable($test);
+        $this->assertEquals(123, $test());
+    }
+
+    public function testResolveStringWithStaticMethocCallNotation()
+    {
+        $test = $this->resolver->resolve(TestClass::class . '::staticMethod()');
+        $this->assertIsCallable($test);
+        $this->assertEquals(123, $test());
+    }
+
+    public function testResolveStringWithObjectCallNotation()
+    {
+        $test = $this->resolver->resolve(TestClass::class . '::process()');
+        $this->assertIsCallable($test);
+        $this->assertEquals(1, $test());
+    }
+    public function testResolveStringWithAtNotation()
+    {
+        $test = $this->resolver->resolve(TestClass::class . '@process()');
+        $this->assertIsCallable($test);
+        $this->assertEquals(1, $test());
+    }
+
+    public function testResolveStringWithFunctionName()
+    {
+        $funcName = 'strlen';
+        $this->assertTrue(function_exists($funcName));
+        $test = $this->resolver->resolve($funcName);
+        $this->assertIsCallable($test);
+        $this->assertEquals(4, $test('test'));
     }
 
     public function testInvalidArgumentException()
