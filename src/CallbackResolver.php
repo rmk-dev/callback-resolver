@@ -80,10 +80,13 @@ class CallbackResolver
      */
     protected function resolveFromString(string $potentialCallback): callable
     {
-        $regex = '/^([\w\\\:]+)(\([^\)]*\))?$/';
+        $regex = '/^(?P<name>[\w\\\\]+)((?P<sep>\:\:|@)(?P<method>\w+))?(\([^\)]*\))?/';
         $matches = [];
-        if (preg_match($regex, $potentialCallback, $matches) && count($matches) === 3) {
-            $potentialCallback = $matches[1];
+        if (preg_match($regex, $potentialCallback, $matches) && !empty($matches['name'])) {
+            $potentialCallback = $matches['name'];
+            if (!empty($matches['sep']) && !empty($matches['method'])) {
+                $potentialCallback .= '::' . $matches['method'];
+            }
         }
 
         if (strpos($potentialCallback, '::') !== false) {

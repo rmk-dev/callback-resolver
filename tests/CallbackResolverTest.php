@@ -123,6 +123,12 @@ class CallbackResolverTest extends TestCase
         $this->assertIsCallable($test);
         $this->assertEquals(1, $test());
     }
+    public function testResolveStringWithAtNotation()
+    {
+        $test = $this->resolver->resolve(TestClass::class . '@process()');
+        $this->assertIsCallable($test);
+        $this->assertEquals(1, $test());
+    }
 
     public function testResolveStringWithFunctionName()
     {
