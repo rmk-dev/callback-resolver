@@ -58,42 +58,65 @@ class CallbackResolver
      */
     public function resolve($potentialCallback): callable
     {
-        if (is_string($potentialCallback) && !is_callable($potentialCallback)) {
-            $potentialCallback = [$potentialCallback];
+        if (is_string($potentialCallback)) {
+            $resolved = $this->resolveFromString($potentialCallback);
+        } else if (is_array($potentialCallback) && count($potentialCallback) >= 1) {
+            $resolved = $this->resolveFromArray($potentialCallback);
+        } else if (is_callable($potentialCallback)) {
+            $resolved = $potentialCallback;
+        } else {
+            throw new ResolverException(ResolverException::INVALID_PARAMETER_TYPE);
         }
 
-        if (is_array($potentialCallback) && count($potentialCallback) >= 1) {
-            $first = array_shift($potentialCallback);
-            if (!is_string($first) && !is_object($first)) {
-                throw new ResolverException(ResolverException::INVALID_ARRAY_ELEMENTS);
-            }
+        return $resolved;
+    }
 
-            if (is_object($first)) {
-                $service = $first;
-            } elseif ($this->getContainer()->has($first)) {
-                $service = $this->getContainer()->get($first);
-            } elseif (class_exists($first)) {
-                $service = new $first();
+    protected function resolveFromString(string $potentialCallback): callable
+    {
+        $regex = '/^([\w\\\:]+)(\([^\)]*\))?$/';
+        $matches = [];
+        if (preg_match($regex, $potentialCallback, $matches) && count($matches) === 3) {
+            $potentialCallback = $matches[1];
+        }
+
+        if (strpos($potentialCallback, '::') !== false) {
+            $resolved = $this->resolveFromArray(explode('::', $potentialCallback));
+        } else if (!is_callable($potentialCallback)) {
+            $resolved = $this->resolveFromArray([$potentialCallback]);
+        } else {
+            $resolved = $potentialCallback;
+        }
+
+        return $resolved;
+    }
+
+    protected function resolveFromArray(array $potentialCallback): callable
+    {
+        $first = array_shift($potentialCallback);
+        if (!is_string($first) && !is_object($first)) {
+            throw new ResolverException(ResolverException::INVALID_ARRAY_ELEMENTS);
+        }
+
+        if (is_object($first)) {
+            $service = $first;
+        } elseif ($this->getContainer()->has($first)) {
+            $service = $this->getContainer()->get($first);
+        } elseif (class_exists($first)) {
+            $service = new $first();
+        } else {
+            throw new ResolverException(ResolverException::INVALID_OBJECT_ELEMENT);
+        }
+
+        if (count($potentialCallback)) {
+            $method = array_shift($potentialCallback);
+            if (method_exists($service, $method)) {
+                $service = [$service, $method];
             } else {
-                throw new ResolverException(ResolverException::INVALID_OBJECT_ELEMENT);
-            }
-
-            if (count($potentialCallback)) {
-                $method = array_shift($potentialCallback);
-                if (method_exists($service, $method)) {
-                    return [$service, $method];
-                }
                 throw new ResolverException(ResolverException::INVALID_METHOD_ELEMENT);
             }
-
-            return $service;
         }
 
-        if (is_callable($potentialCallback)) {
-            return $potentialCallback;
-        }
-
-        throw new ResolverException(ResolverException::INVALID_PARAMETER_TYPE);
+        return $service;
     }
 
     /**
