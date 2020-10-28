@@ -71,6 +71,13 @@ class CallbackResolver
         return $resolved;
     }
 
+    /**
+     * Resolve callback if passed parameter to resolve() is string
+     *
+     * @param string $potentialCallback
+     *
+     * @return callable
+     */
     protected function resolveFromString(string $potentialCallback): callable
     {
         $regex = '/^([\w\\\:]+)(\([^\)]*\))?$/';
@@ -90,6 +97,13 @@ class CallbackResolver
         return $resolved;
     }
 
+    /**
+     * Resolve callback if passed paramteter to resolve() is arra
+     *
+     * @param array $potentialCallback
+     *
+     * @return callable
+     */
     protected function resolveFromArray(array $potentialCallback): callable
     {
         $first = array_shift($potentialCallback);
