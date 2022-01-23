@@ -2,7 +2,7 @@
     "name": "rmk/callback-resolver",
     "description": "Callback container and resolver service",
     "require": {
-        "php": "^7.4",
+        "php": "^7.4 || ^8.0",
         "psr/container": "^1.0"
     },
     "require-dev": {
